@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -18,9 +19,30 @@ class User extends BaseUser
      */
     protected $id;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Account", mappedBy="user")
+     */
+    protected $accounts;
+
     public function __construct()
     {
         parent::__construct();
-        // your own logic
+        
+        $this->accounts = new ArrayCollection();
+    }
+
+    public function addAccount($account)
+    {
+        $this->accounts[] = $account;
+    }
+
+    public function removeAccount($account)
+    {
+        $this->accounts->removeElement($account);
+    }
+
+    public function getAccounts()
+    {
+        return $this->accounts;
     }
 }
