@@ -1,3 +1,7 @@
+dades_scheduled_task:
+    resource: "@DadesScheduledTaskBundle/Resources/config/routing.yml"
+    prefix:   /
+
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
