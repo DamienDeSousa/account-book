@@ -8,7 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Account;
-
+use AppBundle\Service\AccountService;
+use Doctrine\ORM\EntityManagerInterface;
 
 class DefaultController extends Controller
 {
@@ -29,14 +30,11 @@ class DefaultController extends Controller
     /**
      * @Route("/debug", name="debugpage")
      */
-    public function debug(Request $request)
+    public function debug(Request $request, AccountService $accountService)
     {
-        $user = new User();
-        $account = new Account();
-
-        $user->addAccount($account);
-        $account->setUser($user);
-
-        return new Response("");
+        /*$repo = $this->getDoctrine()->getRepository(User::class);
+        $user = $repo->find(1);
+        $account = $accountService->create("nom", 0.0, -150, $user);
+        $accountService->save($account);*/
     }
 }
