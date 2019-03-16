@@ -1,4 +1,6 @@
 services:
-#    dades_scheduled_task.example:
-#        class: Dades\ScheduledTaskBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+  dades_scheduled_task.scheduledtask:
+    class: Dades\ScheduledTaskBundle\Service\ScheduledTaskService
+
+  dades_scheduled_task.windowsscheduledfactory:
+    class: Dades\ScheduledTaskBundle\Service\Factory\WindowsScheduledFactory
