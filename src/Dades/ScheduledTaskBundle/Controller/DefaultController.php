@@ -16,8 +16,8 @@ class DefaultController extends Controller
      */
     public function indexAction(ScheduledTaskService $scheduledTaskService)
     {
-        $scheduledTask = $scheduledTaskService->create("nom", "MINUTE", "notepad.exe", "00:40:00");
-        $scheduledTaskService->save($scheduledTask);
+        /*$scheduledTask = $scheduledTaskService->create("nom", "MINUTE", "notepad.exe", "00:40:00");
+        $scheduledTaskService->save($scheduledTask);*/
         die();
         return new Response($scheduledTask);
         //return $this->render('DadesScheduledTaskBundle:Default:index.html.twig');

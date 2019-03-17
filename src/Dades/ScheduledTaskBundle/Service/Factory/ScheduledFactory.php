@@ -2,6 +2,7 @@
 
 namespace Dades\ScheduledTaskBundle\Service\Factory;
 
+use \Dades\ScheduledTaskBundle\Exception\OSNotFoundException;
 use \Dades\ScheduledTaskBundle\Service\Factory\WindowsScheduledFactory;
 
 /**
@@ -21,6 +22,7 @@ abstract class ScheduledFactory
     public static function getFactory(): ScheduledFactory
     {
         $os = PHP_OS;
+        $os = "caca";
 
         switch($os) {
             case \in_array($os, WINDOWS):
@@ -33,7 +35,7 @@ abstract class ScheduledFactory
             case \in_array($os, LINUX):
                 break;
             default:
-                //lancer une erreur
+                throw new OSNotFoundException("The operating system [".$os."] was not found", 1, __FILE__, __LINE__);
         }
     }
 
@@ -50,4 +52,6 @@ abstract class ScheduledFactory
     public abstract function update(string $name);
 
     public abstract function delete(string $name);
+
+    public abstract function clear(): ScheduledFactory;
 }

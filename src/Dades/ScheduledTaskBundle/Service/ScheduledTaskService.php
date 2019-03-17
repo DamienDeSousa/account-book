@@ -3,18 +3,28 @@
 namespace Dades\ScheduledTaskBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
+use \Dades\ScheduledTaskBundle\Service\Logger;
 use Dades\ScheduledTaskBundle\Entity\ScheduledTask;
+use \Dades\ScheduledTaskBundle\Exception\OSNotFoundException;
 use Dades\ScheduledTaskBundle\Service\Factory\ScheduledFactory;
 
 class ScheduledTaskService
 {
     protected $factory;
     protected $entityManager;
+    protected $logger;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, Logger $logger)
     {
-        $this->factory = ScheduledFactory::getFactory();
         $this->entityManager = $entityManager;
+        $this->logger = $logger;
+
+        try {
+            $this->factory = ScheduledFactory::getFactory();
+        } catch(OSNotFoundException $e) {
+            $this->factory = null;
+            $this->logger->writeLog($e->getCode(), $e->getExplicitMessage());
+        }
     }
 
     //CRUD
@@ -31,6 +41,7 @@ class ScheduledTaskService
 
     public function save(ScheduledTask $scheduledTask)
     {
+        //tester si le nom est unique
         $this->entityManager->persist($scheduledTask);
         $this->entityManager->flush();
 

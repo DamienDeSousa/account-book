@@ -2,6 +2,7 @@
 
 namespace Dades\ScheduledTaskBundle\Service\Factory;
 
+use \Dades\ScheduledTaskBundle\Service\Logger;
 use Dades\ScheduledTaskBundle\Service\Factory\ScheduledFactory;
 
 class WindowsScheduledFactory extends ScheduledFactory
@@ -10,10 +11,13 @@ class WindowsScheduledFactory extends ScheduledFactory
 
     protected $toBuild;
 
-    public function __construct()
+    protected $logger;
+
+    public function __construct(Logger $logger)
     {
         $this->command = "schtasks /F ";
         $this->toBuild = "";
+        $this->logger = $logger;
     }
 
     public function create(string $name): ScheduledFactory
@@ -43,7 +47,19 @@ class WindowsScheduledFactory extends ScheduledFactory
 
     public function launch(): ScheduledFactory
     {
-        exec($this->toBuild);
+        $output = [];
+        $status;
+        exec($this->toBuild." 2>&1", $output, $status);
+        if ($status !== 0) {
+            $this->logger->writeLog($status, $output);
+            //lancer une exception
+        }
+        $this->clear();
+        return $this;
+    }
+
+    public function clear(): ScheduledFactory
+    {
         $this->toBuild = "";
         return $this;
     }
