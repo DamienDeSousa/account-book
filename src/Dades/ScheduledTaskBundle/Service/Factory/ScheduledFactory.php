@@ -2,6 +2,7 @@
 
 namespace Dades\ScheduledTaskBundle\Service\Factory;
 
+use Dades\ScheduledTaskBundle\Service\Logger;
 use \Dades\ScheduledTaskBundle\Exception\OSNotFoundException;
 use \Dades\ScheduledTaskBundle\Service\Factory\WindowsScheduledFactory;
 
@@ -19,14 +20,13 @@ define('LINUX', ['Linux']);
 
 abstract class ScheduledFactory
 {
-    public static function getFactory(): ScheduledFactory
+    public static function getFactory(Logger $logger): ScheduledFactory
     {
         $os = PHP_OS;
-        $os = "caca";
 
         switch($os) {
             case \in_array($os, WINDOWS):
-                return new WindowsScheduledFactory();
+                return new WindowsScheduledFactory($logger);
                 break;
             case \in_array($os, MACOS):
                 break;

@@ -3,6 +3,7 @@
 namespace Dades\ScheduledTaskBundle\Service\Factory;
 
 use \Dades\ScheduledTaskBundle\Service\Logger;
+use Dades\ScheduledTaskBundle\Exception\BadCommandException;
 use Dades\ScheduledTaskBundle\Service\Factory\ScheduledFactory;
 
 class WindowsScheduledFactory extends ScheduledFactory
@@ -51,8 +52,7 @@ class WindowsScheduledFactory extends ScheduledFactory
         $status;
         exec($this->toBuild." 2>&1", $output, $status);
         if ($status !== 0) {
-            $this->logger->writeLog($status, $output);
-            //lancer une exception
+            throw new BadCommandException($this->toBuild, $this->logger->stringifyOutput($output), 1, __FILE__, __LINE__);
         }
         $this->clear();
         return $this;

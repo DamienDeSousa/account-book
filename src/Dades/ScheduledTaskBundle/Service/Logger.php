@@ -9,6 +9,11 @@ class Logger
     public function __construct()
     {
         $this->fileLog = "../var/logs/dades_scheduled_task_bundle.log";
+
+        if (!file_exists($this->fileLog)) {
+            file_put_contents('dades_scheduled_task_bundle.log', "");
+            rename('dades_scheduled_task_bundle.log', $this->fileLog);
+        }
     }
 
     public function writeLog(int $status, $output)
@@ -23,7 +28,7 @@ class Logger
         file_put_contents($this->fileLog, "[".$this->getDate()."]: ".$message.PHP_EOL, FILE_APPEND);
     }
 
-    protected function stringifyOutput(array $output): string
+    public function stringifyOutput(array $output): string
     {
         $result = "";
         foreach($output as $key => $value) {
@@ -35,5 +40,10 @@ class Logger
     protected function getDate()
     {
         return date('Y-m-d H:i:s');
+    }
+
+    public function getFile()
+    {
+        return $this->fileLog;
     }
 }
