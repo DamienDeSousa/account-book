@@ -8,7 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Dades\ScheduledTaskBundle\Service\ScheduledTaskService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Dades\ScheduledTaskBundle\Exception\BadCommandException;
-use Dades\ScheduledTaskBundle\Service\Factory\ScheduledFactory;
+
+///use Dades\ScheduledTaskBundle\Service\Factory\ScheduledFactory;
 
 class DefaultController extends Controller
 {
@@ -17,9 +18,10 @@ class DefaultController extends Controller
      */
     public function indexAction(ScheduledTaskService $scheduledTaskService)
     {
-        $scheduledTask = $scheduledTaskService->create("nom", "MINUTE", "cd D:\symfonyProjects\\3.4\account-book;dir >> dades_scheduled_task_bundle.log", "18:31:00");
+        $scheduledTask = $scheduledTaskService->create("nom", "MINUTE", "notepad.exe", "21:01:00");
         $scheduledTaskService->save($scheduledTask);
-        
+        //$scheduledTaskService->delete("nom");
+
         die();
         return new Response($scheduledTask);
     }

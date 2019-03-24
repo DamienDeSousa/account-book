@@ -18,13 +18,24 @@ define('UNIX', ['FreeBSD', 'HP-UX', 'IRIX64', 'NetBSD', 'OpenBSD', 'SunOS', 'Uni
 
 define('LINUX', ['Linux']);
 
+/**
+ * Abstract factory that return the right factory to build scheduled task on
+ * Windows, Linux or MacOS
+ *
+ * @author Damien DE SOUSA
+ */
 abstract class ScheduledFactory
 {
+    /**
+     * Return the right factory to build scheduled task
+     * @param  Logger           $logger [description]
+     * @return ScheduledFactory         [description]
+     */
     public static function getFactory(Logger $logger): ScheduledFactory
     {
         $os = PHP_OS;
 
-        switch($os) {
+        switch ($os) {
             case \in_array($os, WINDOWS):
                 return new WindowsScheduledFactory($logger);
                 break;
@@ -39,19 +50,19 @@ abstract class ScheduledFactory
         }
     }
 
-    public abstract function create(string $name): ScheduledFactory;
+    abstract public function create(string $name): ScheduledFactory;
 
-    public abstract function schedule(string $occurence): ScheduledFactory;
+    abstract public function schedule(string $occurence): ScheduledFactory;
 
-    public abstract function command(string $command): ScheduledFactory;
+    abstract public function command(string $command): ScheduledFactory;
 
-    public abstract function startAt(string $hour): ScheduledFactory;
+    abstract public function startAt(string $hour): ScheduledFactory;
 
-    public abstract function launch(): ScheduledFactory;
+    abstract public function launch(): ScheduledFactory;
 
-    public abstract function update(string $name);
+    abstract public function update(string $name): ScheduledFactory;
 
-    public abstract function delete(string $name);
+    abstract public function delete(string $name): ScheduledFactory;
 
-    public abstract function clear(): ScheduledFactory;
+    abstract public function clear(): ScheduledFactory;
 }
