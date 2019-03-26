@@ -67,12 +67,12 @@ class ScheduledTask
      *
      * @return ScheduledTask
      */
-    public function setName($name)
+    /*public function setName($name)
     {
         $this->name = $name;
 
         return $this;
-    }
+    }*/
 
     /**
      * Get name
@@ -156,4 +156,3 @@ class ScheduledTask
         return $this->startTime;
     }
 }
-
