@@ -2,11 +2,13 @@
 
 namespace Dades\ScheduledTaskBundle\Service;
 
+use Dades\ScheduledTaskBundle\Service\Utility\ConvertEncode;
+
 class Logger
 {
     protected $fileLog;
 
-    public function __construct()
+    public function __construct(ConvertEncode $convertEncode)
     {
         $this->fileLog = "../var/logs/dades_scheduled_task_bundle.log";
 
@@ -24,14 +26,18 @@ class Logger
         } elseif (is_string($output)) {
             $message = $output;
         }
-        
-        file_put_contents($this->fileLog, "[".$this->getDate()."]: ".$message.PHP_EOL, FILE_APPEND);
+
+        file_put_contents(
+            $this->fileLog,
+            "[".$this->getDate()."]: ".$message.PHP_EOL,
+            FILE_APPEND
+        );
     }
 
     public function stringifyOutput(array $output): string
     {
         $result = "";
-        foreach($output as $key => $value) {
+        foreach ($output as $key => $value) {
             $result .= $value.PHP_EOL;
         }
         return $result;
