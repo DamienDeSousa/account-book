@@ -49,7 +49,7 @@ abstract class ScheduledFactory
                 throw new OSNotFoundException("The operating system [".$os."] was not found", 1, __FILE__, __LINE__);
         }
     }
-
+    
     abstract public function create(string $name): ScheduledFactory;
 
     abstract public function schedule(string $occurence): ScheduledFactory;

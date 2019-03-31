@@ -8,9 +8,33 @@ namespace Dades\ScheduledTaskBundle\Service\Utility;
  */
 interface WeekOfMonth
 {
+    /**
+     * First week of a month
+     * @var string
+     */
     const FIRST = "FIRST";
+
+    /**
+     * Second week of a month
+     * @var string
+     */
     const SECOND = "SECOND";
+
+    /**
+     * Third week of a month
+     * @var string
+     */
     const THIRD = "THIRD";
+
+    /**
+     * Fourth week of a month
+     * @var string
+     */
     const FOURTH = "FOURTH";
+
+    /**
+     * Last week of a month
+     * @var string
+     */
     const LAST = "LAST";
 }

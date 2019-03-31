@@ -9,6 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="scheduled_task")
  * @ORM\Entity(repositoryClass="Dades\ScheduledTaskBundle\Repository\ScheduledTaskRepository")
+ *
+ * Represent a task to schedule
+ * @author Damien DE SOUSA
  */
 class ScheduledTask
 {

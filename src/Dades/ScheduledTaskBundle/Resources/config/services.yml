@@ -1,6 +1,3 @@
 services:
   dades_scheduled_task.scheduledtask:
     class: Dades\ScheduledTaskBundle\Service\ScheduledTaskService
-
-  #dades_scheduled_task.windowsscheduledfactory:
-    #class: Dades\ScheduledTaskBundle\Service\Factory\WindowsScheduledFactory

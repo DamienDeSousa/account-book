@@ -33,7 +33,6 @@ class WindowsScheduledFactory extends ScheduledFactory
     protected $logger;
 
     /**
-     * [__construct description]
      * @param Logger $logger [description]
      */
     public function __construct(Logger $logger)

@@ -39,7 +39,6 @@ class ScheduledTaskService implements Occurence, DayOfWeek, WeekOfMonth
     protected $logger;
 
     /**
-     * [__construct description]
      * @param EntityManagerInterface $entityManager [description]
      * @param Logger                 $logger        [description]
      */
@@ -68,9 +67,8 @@ class ScheduledTaskService implements Occurence, DayOfWeek, WeekOfMonth
     }
 
     /**
-     * [save description]
+     * Save a scheduled task
      * @param  ScheduledTask $scheduledTask [description]
-     * @return [type]                       [description]
      */
     public function save(ScheduledTask $scheduledTask)
     {

@@ -46,10 +46,4 @@ class DefaultController extends Controller
 /**
  * Ajouter la compatibilité sur Unix / Linux
  * https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/schtasks#BKMK_create
- * Evolutions:
- *  - schedule more specificly (every 20 minutes, every 3 hours, every 4 week, ...) TO TEST
- *  - schedule a specific day of week TO TEST
- *  - schedule a specific week of month TO TEST
- *  - schedule on a specific date each month
- *  - schedule on the last day of a month
  */
