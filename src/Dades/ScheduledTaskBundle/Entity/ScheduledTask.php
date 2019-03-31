@@ -49,6 +49,36 @@ class ScheduledTask
      */
     private $startTime;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="frequency", type="string", length=50, nullable=false)
+     */
+    private $frequency;
+
+    /**
+     * @var string
+     * @ORM\Column(name="day", type="string", length=50)
+     */
+    private $day;
+
+    /**
+     * @var string
+     * @ORM\Column(name="month", type="string", length=50)
+     */
+    private $month;
+
+
+    /**
+     * Construct a ScheduledTask entity
+     */
+    public function __construct()
+    {
+        $this->frequency = "";
+        $this->day = "";
+        $this->month = "";
+        $this->startTime = "";
+    }
 
     /**
      * Get id
@@ -67,12 +97,12 @@ class ScheduledTask
      *
      * @return ScheduledTask
      */
-    /*public function setName($name)
+    public function setName($name)
     {
         $this->name = $name;
 
         return $this;
-    }*/
+    }
 
     /**
      * Get name
@@ -154,5 +184,77 @@ class ScheduledTask
     public function getStartTime()
     {
         return $this->startTime;
+    }
+
+    /**
+     * Get the value of Frequency
+     *
+     * @return string
+     */
+    public function getFrequency()
+    {
+        return $this->frequency;
+    }
+
+    /**
+     * Set the value of Frequency
+     *
+     * @param string frequency
+     *
+     * @return self
+     */
+    public function setFrequency($frequency)
+    {
+        $this->frequency = $frequency;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of Day
+     *
+     * @return string
+     */
+    public function getDay()
+    {
+        return $this->day;
+    }
+
+    /**
+     * Set the value of Day
+     *
+     * @param string day
+     *
+     * @return self
+     */
+    public function setDay($day)
+    {
+        $this->day = $day;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of Month
+     *
+     * @return string
+     */
+    public function getMonth()
+    {
+        return $this->month;
+    }
+
+    /**
+     * Set the value of Month
+     *
+     * @param string month
+     *
+     * @return self
+     */
+    public function setMonth($month)
+    {
+        $this->month = $month;
+
+        return $this;
     }
 }

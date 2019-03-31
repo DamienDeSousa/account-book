@@ -65,4 +65,10 @@ abstract class ScheduledFactory
     abstract public function delete(string $name): ScheduledFactory;
 
     abstract public function clear(): ScheduledFactory;
+
+    abstract public function every(string $frequency): ScheduledFactory;
+
+    abstract public function day(string $day): ScheduledFactory;
+
+    abstract public function month(string $month): ScheduledFactory;
 }

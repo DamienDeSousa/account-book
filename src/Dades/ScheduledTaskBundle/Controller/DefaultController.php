@@ -9,8 +9,6 @@ use Dades\ScheduledTaskBundle\Service\ScheduledTaskService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Dades\ScheduledTaskBundle\Exception\BadCommandException;
 
-///use Dades\ScheduledTaskBundle\Service\Factory\ScheduledFactory;
-
 class DefaultController extends Controller
 {
     /**
@@ -18,11 +16,20 @@ class DefaultController extends Controller
      */
     public function indexAction(ScheduledTaskService $scheduledTaskService)
     {
-        /*$scheduledTask = $scheduledTaskService->create("nom", ScheduledTaskService::ONCE, "notepad.exe", "21:01:00");
+        /*$scheduledTask = $scheduledTaskService->create();
+        $scheduledTask->setName("nom")
+          ->setCommand("notepad.exe")
+        ->setStartTime("16:13:00");
+        $scheduledTaskService->everySpecificDateOfMonth($scheduledTask, "31");
+
         $scheduledTaskService->save($scheduledTask);*/
-        //$scheduledTask = $scheduledTaskService->getByName("nom");
-        //$scheduledTaskService->update($scheduledTask);
-        $scheduledTaskService->deleteByName("nom2");
+
+        /*$scheduledTask = $scheduledTaskService->getByName("nom");
+        $scheduledTask->setFrequency(2);
+        $scheduledTaskService->update($scheduledTask);*/
+
+        $scheduledTask = $scheduledTaskService->getByName("nom");
+        $scheduledTaskService->deleteByName("nom");
 
         die();
         return new Response($scheduledTask);
@@ -34,14 +41,15 @@ class DefaultController extends Controller
 //schtasks /Delete /TN nom
 
 //schtasks /Create /TN nom2 /SC ONCE /TR "php D:\symfonyProjects\3.4\account-book\bin\console doctrine:schema:update --force" /ST 20:26:00
+//https://packagist.org/packages/lavary/crunz (cron for unix kernel)
 
 /**
- * Modifier l'encodage des caractères des messages d'erreurs en UTF-8.
- * Ajouter la compatibilité sur Unix
+ * Ajouter la compatibilité sur Unix / Linux
+ * https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/schtasks#BKMK_create
  * Evolutions:
- *  - schedule more specificly (every 20 minutes, every 3 hours, every 4 week, ...)
- *  - schedule a specific day of week
- *  - schedule a specific week of month
- *  - schedule on aspecific date each month
+ *  - schedule more specificly (every 20 minutes, every 3 hours, every 4 week, ...) TO TEST
+ *  - schedule a specific day of week TO TEST
+ *  - schedule a specific week of month TO TEST
+ *  - schedule on a specific date each month
  *  - schedule on the last day of a month
  */

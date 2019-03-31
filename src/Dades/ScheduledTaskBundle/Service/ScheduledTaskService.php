@@ -10,13 +10,15 @@ use Dades\ScheduledTaskBundle\Exception\OSNotFoundException;
 use Dades\ScheduledTaskBundle\Exception\NoSuchEntityException;
 use Dades\ScheduledTaskBundle\Service\Logger;
 use Dades\ScheduledTaskBundle\Service\Utility\Occurence;
+use Dades\ScheduledTaskBundle\Service\Utility\DayOfWeek;
+use Dades\ScheduledTaskBundle\Service\Utility\WeekOfMonth;
 
 /**
  * Service to use for manage the scheduled tasks.
  *
  * @author Damien DE SOUSA
  */
-class ScheduledTaskService implements Occurence
+class ScheduledTaskService implements Occurence, DayOfWeek, WeekOfMonth
 {
     /**
      * Factory that build a scheduled task
@@ -56,19 +58,11 @@ class ScheduledTaskService implements Occurence
 
     /**
      * Create a new ScheduledTask
-     * @param  string        $name      [description]
-     * @param  string        $occurence [description]
-     * @param  string        $command   [description]
-     * @param  string        $startTime [description]
-     * @return ScheduledTask            [description]
+     * @return ScheduledTask [description]
      */
-    public function create(string $name, string $occurence, string $command, string $startTime): ScheduledTask
+    public function create(): ScheduledTask
     {
         $scheduledTask = new ScheduledTask();
-        $scheduledTask->setName($name)
-            ->setOccurence($occurence)
-            ->setCommand($command)
-            ->setStartTime($startTime);
 
         return $scheduledTask;
     }
@@ -82,11 +76,8 @@ class ScheduledTaskService implements Occurence
     {
         //tester si le nom est unique
         try {
-            $this->factory->create($scheduledTask->getName())
-                ->schedule($scheduledTask->getOccurence())
-                ->command($scheduledTask->getCommand())
-                ->startAt($scheduledTask->getStartTime())
-                ->launch();
+            $this->setScheduledCommand($scheduledTask);
+            $this->factory->launch();
 
             $this->entityManager->persist($scheduledTask);
             $this->entityManager->flush();
@@ -142,23 +133,73 @@ class ScheduledTaskService implements Occurence
      */
     public function update(ScheduledTask $scheduledTask)
     {
-        //pour la mise a jour en base: rien de nouveau, simplement utiliser Doctrine
-        //pour la mise à jour de la tache: recréer une tache par dessus avec /F
-        //si on change le nom de la tache, il faut d'abord la supprimer de la base et ensuite la recréer
         if (!$scheduledTask) {
             throw new NoSuchEntityException("The ScheduledTask given is null", 1);
         }
 
         try {
-            $this->factory->create($scheduledTask->getName())
-              ->schedule($scheduledTask->getOccurence())
-              ->command($scheduledTask->getCommand())
-              ->startAt($scheduledTask->getStartTime())
-              ->launch();
+            $this->setScheduledCommand($scheduledTask);
+            $this->factory->launch();
 
             $this->entityManager->flush();
         } catch (BadCommandException $e) {
             $this->logger->writeLog($e->getCode(), $e->getExplicitMessage());
         }
+    }
+
+    /**
+     * Set all the parameters for the schedule command line
+     *
+     * @param ScheduledTask $scheduledTask
+     * @return void
+     */
+    protected function setScheduledCommand(ScheduledTask $scheduledTask)
+    {
+        $this->factory->create($scheduledTask->getName())
+          ->schedule($scheduledTask->getOccurence())
+          ->command($scheduledTask->getCommand());
+
+        if ($scheduledTask->getStartTime() !== "") {
+            $this->factory->startAt($scheduledTask->getStartTime());
+        }
+
+        if ($scheduledTask->getFrequency() !== "") {
+            $this->factory->every($scheduledTask->getFrequency());
+        }
+
+        if ($scheduledTask->getDay() !== "") {
+            $this->factory->day($scheduledTask->getDay());
+        }
+
+        if ($scheduledTask->getMonth() !== "") {
+            $this->factory->month($scheduledTask->getMonth());
+        }
+    }
+
+    /**
+     * Run a task on a specific date each month
+     * @param  ScheduledTask $scheduledTask [description]
+     * @param  string        $day           Between 1 and 31
+     * @return ScheduledTask                [description]
+     */
+    public function everySpecificDateOfMonth(ScheduledTask $scheduledTask, string $day): ScheduledTask
+    {
+        $scheduledTask->setDay($day)
+          ->setOccurence(ScheduledTaskService::MONTHLY);
+
+        return $scheduledTask;
+    }
+
+    /**
+     * Run a task every month at the last day
+     * @return ScheduledFactory [description]
+     */
+    public function everyLastDayOfMonth(ScheduledTask $scheduledTask): ScheduledTask
+    {
+        $scheduledTask->setOccurence(ScheduledTaskService::MONTHLY)
+          ->setFrequency(ScheduledTaskService::LASTDAY)
+          ->setMonth("*");
+
+        return $scheduledTask;
     }
 }
