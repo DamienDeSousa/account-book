@@ -6,8 +6,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Dades\ScheduledTaskBundle\Service\ScheduledTaskService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+//use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Dades\ScheduledTaskBundle\Exception\BadCommandException;
+use Cron\CronExpression;
+use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends Controller
 {
@@ -16,23 +18,27 @@ class DefaultController extends Controller
      */
     public function indexAction(ScheduledTaskService $scheduledTaskService)
     {
-        /*$scheduledTask = $scheduledTaskService->create();
-        $scheduledTask->setName("nom")
-          ->setCommand("notepad.exe")
-        ->setStartTime("16:13:00");
-        $scheduledTaskService->everySpecificDateOfMonth($scheduledTask, "31");
-
-        $scheduledTaskService->save($scheduledTask);*/
-
         /*$scheduledTask = $scheduledTaskService->getByName("nom");
-        $scheduledTask->setFrequency(2);
-        $scheduledTaskService->update($scheduledTask);*/
-
-        $scheduledTask = $scheduledTaskService->getByName("nom");
-        $scheduledTaskService->deleteByName("nom");
-
+        $scheduledTaskService->deleteByName("nom");*/
+        $cron = CronExpression::factory('* * * * *');
+        echo $cron->isDue()."<br/>";
+        echo $cron->getNextRunDate()->format('Y-m-d H:i:s')."<br/>";
+        echo $cron->getPreviousRunDate()->format('Y-m-d H:i:s');
         die();
         return new Response($scheduledTask);
+    }
+
+    /**
+     * @Route("/debug", name="debugpage")
+     */
+    public function debugAction()
+    {
+        /*$cron = CronExpression::factory('@daily');
+        $cron->isDue();
+        echo $cron->getNextRunDate()->format('Y-m-d H:i:s');
+        echo $cron->getPreviousRunDate()->format('Y-m-d H:i:s');*/
+
+        return new Response("");
     }
 }
 //https://sites.google.com/site/ballif1073/windows/taches-planifiees
@@ -47,3 +53,15 @@ class DefaultController extends Controller
  * Ajouter la compatibilité sur Unix / Linux
  * https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/schtasks#BKMK_create
  */
+
+ /*$scheduledTask = $scheduledTaskService->create();
+ $scheduledTask->setName("nom")
+   ->setCommand("notepad.exe")
+ ->setStartTime("16:13:00");
+ $scheduledTaskService->everySpecificDateOfMonth($scheduledTask, "31");
+
+ $scheduledTaskService->save($scheduledTask);*/
+
+ /*$scheduledTask = $scheduledTaskService->getByName("nom");
+ $scheduledTask->setFrequency(2);
+ $scheduledTaskService->update($scheduledTask);*/
