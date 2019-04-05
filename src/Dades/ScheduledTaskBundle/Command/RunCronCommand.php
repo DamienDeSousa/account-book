@@ -40,15 +40,28 @@ class RunCronCommand extends Command
      */
     protected function configure()
     {
-        $this->setDescription("Run all scrons.")
+        $this->setDescription("Run all crons.")
             ->setHelp("Run all crons created in Symfony.");
     }
 
+    /**
+     * The body of the command
+     * @param  InputInterface  $input  [description]
+     * @param  OutputInterface $output [description]
+     * @return void                  [description]
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $command = "echo ceci est un test >> var/logs/dades_scheduled_task_bundle.log";
+        $output->writeln('zfhrjfjevjfvb');
+        //prochaines étapes:
+        //exécuter le code ci-dessous et rediriger l'affichage dans le dossier var/logs/dades_scheduled_task_bundle.log
+        //déléguer le système de log à un service dédié
+        //créer des commandes et les exécuter
+        //faire du test en masse
+
+        /*$command = "echo ceci est un test >> var/logs/dades_scheduled_task_bundle.log";
         $output = [];
         $status;
-        exec($command, $output, $status);
+        exec($command, $output, $status);*/
     }
 }

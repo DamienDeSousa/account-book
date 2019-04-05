@@ -4,11 +4,9 @@ namespace Dades\ScheduledTaskBundle\Service;
 
 use Dades\ScheduledTaskBundle\Entity\ScheduledTask;
 use Dades\ScheduledTaskBundle\Exception\BadCommandException;
-use Dades\ScheduledTaskBundle\Service\Factory\ScheduledFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Dades\ScheduledTaskBundle\Exception\OSNotFoundException;
 use Dades\ScheduledTaskBundle\Exception\NoSuchEntityException;
-use Dades\ScheduledTaskBundle\Service\Logger;
 
 /**
  * Service to use for manage the scheduled tasks.
@@ -23,6 +21,10 @@ class ScheduledTaskService
      */
     protected $entityManager;
 
+    /**
+     * [protected description]
+     * @var \Doctrine\Common\Persistence\ObjectRepository
+     */
     protected $repository;
 
     /**

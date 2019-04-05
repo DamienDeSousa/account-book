@@ -2,8 +2,6 @@
 
 namespace Dades\ScheduledTaskBundle\Service;
 
-use Dades\ScheduledTaskBundle\Service\Utility\ConvertEncode;
-
 /**
  * Log messages in var/logs/dades_scheduled_task_bundle.log
  * @author Damien DE SOUSA
