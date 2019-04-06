@@ -52,16 +52,15 @@ class RunCronCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('zfhrjfjevjfvb');
+        //$output->writeln('zfhrjfjevjfvb');
         //prochaines étapes:
-        //exécuter le code ci-dessous et rediriger l'affichage dans le dossier var/logs/dades_scheduled_task_bundle.log
+        //DONE : exécuter le code ci-dessous et rediriger l'affichage dans le dossier var/logs/dades_scheduled_task_bundle.log
         //déléguer le système de log à un service dédié
         //créer des commandes et les exécuter
         //faire du test en masse
 
-        /*$command = "echo ceci est un test >> var/logs/dades_scheduled_task_bundle.log";
-        $output = [];
+        /*$result = [];
         $status;
-        exec($command, $output, $status);*/
+        exec("ls >> /home/damien/Documents/SymfonyProjects/3.4/account-book/var/logs/dades_scheduled_task_bundle.log", $result, $status);*/
     }
 }
