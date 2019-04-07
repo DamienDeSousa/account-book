@@ -59,6 +59,8 @@ class RunCronCommand extends Command
         //créer des commandes et les exécuter
         //faire du test en masse
 
+        //https://stackoverflow.com/questions/11209529/how-to-access-an-application-parameters-from-a-service
+
         /*$result = [];
         $status;
         exec("ls >> /home/damien/Documents/SymfonyProjects/3.4/account-book/var/logs/dades_scheduled_task_bundle.log", $result, $status);*/
