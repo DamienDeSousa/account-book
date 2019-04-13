@@ -6,7 +6,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Dades\ScheduledTaskBundle\Service\ScheduledTaskService;
-use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Run all defined cron in Symfony.
@@ -29,13 +28,9 @@ class RunCronCommand extends Command
      */
     protected $scheduledTaskService;
 
-    public function __construct(string $projectdir)
+    public function __construct($projectdir)
     {
-        //ScheduledTaskService $scheduledTaskService
-        //$this->scheduledTaskService = $scheduledTaskService;
-
         parent::__construct();
-
         $this->rootDir = $projectdir;
     }
 
@@ -68,7 +63,8 @@ class RunCronCommand extends Command
 
         $result = [];
         $status;
-        exec("echo ".$this->rootDir." >> D:\\symfonyProjects\\3.4\account-book\\var\\logs\\dades_scheduled_task_bundle.log", $result, $status);
+        exec("echo ".$this->rootDir." >> ".$this->rootDir."\\var\\logs\\dades_scheduled_task_bundle.log", $result, $status);
+
         //D: && cd D:\\symfonyProjects\\3.4\\account-book\\ && dir >> var\\logs\\dades_scheduled_task_bundle.log
         //windows: dir D:\\ >> D:\\symfonyProjects\\3.4\account-book\\var\\logs\\dades_scheduled_task_bundle.log
         //commande à créer: schtasks /CREATE /TN "account_book_cron" /TR "php D:\symfonyProjects\3.4\account-book\bin\console cron:run" /SC minute

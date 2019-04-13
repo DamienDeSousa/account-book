@@ -1,3 +1,19 @@
+parameters:
+
 services:
-  dades_scheduled_task.scheduledtask:
-    class: Dades\ScheduledTaskBundle\Service\ScheduledTaskService
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Dades\ScheduledTaskBundle\:
+        resource: '../../*'
+        exclude: '../../{Entity,Repository,Tests}'
+
+    Dades\ScheduledTaskBundle\Controller\:
+        resource: '../../Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
+    Dades\ScheduledTaskBundle\Command\RunCronCommand:
+        $projectdir: '%kernel.project_dir%'

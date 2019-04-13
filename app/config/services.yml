@@ -28,20 +28,3 @@ services:
         resource: '../../src/AppBundle/Controller'
         public: true
         tags: ['controller.service_arguments']
-
-    # add more services, or override services that need manual wiring
-    # AppBundle\Service\ExampleService:
-    #     arguments:
-    #         $someArgument: 'some_value'
-
-    Dades\ScheduledTaskBundle\:
-        resource: '../../src/Dades/ScheduledTaskBundle/*'
-        exclude: '../../src/Dades/ScheduledTaskBundle/{Entity,Repository,Tests}'
-
-    Dades\ScheduledTaskBundle\Controller\:
-        resource: '../../src/Dades/ScheduledTaskBundle/Controller'
-        public: true
-        tags: ['controller.service_arguments']
-
-    Dades\ScheduledTaskBundle\Command\RunCronCommand:
-        $projectdir: '%kernel.project_dir%'
