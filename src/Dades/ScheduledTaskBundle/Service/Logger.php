@@ -15,15 +15,29 @@ class Logger
     protected $fileLog;
 
     /**
-     * @param ConvertEncode $convertEncode [description]
+     * The path where the log file is
+     * @var string
      */
-    public function __construct(ConvertEncode $convertEncode)
-    {
-        $this->fileLog = "../var/logs/dades_scheduled_task_bundle.log";
+    protected $projectdir;
 
-        if (!file_exists($this->fileLog)) {
-            file_put_contents('dades_scheduled_task_bundle.log', "");
-            rename('dades_scheduled_task_bundle.log', $this->fileLog);
+    /**
+     * The full path, the project dir plus the file name
+     * @var string
+     */
+    protected $path;
+
+    /**
+     * [__construct description]
+     * @param string $rootDir [description]
+     */
+    public function __construct(string $projectdir, string $fileLog)
+    {
+        $this->projectdir = $projectdir;
+        $this->fileLog = $fileLog;
+        $this->path = $this->projectdir .'\\var\\logs\\'.$this->fileLog;
+
+        if (!file_exists($this->path)) {
+            file_put_contents($this->path, "");
         }
     }
 
@@ -42,7 +56,7 @@ class Logger
         }
 
         file_put_contents(
-            $this->fileLog,
+            $this->path,
             "[".$this->getDate()."]: ".$message.PHP_EOL,
             FILE_APPEND
         );

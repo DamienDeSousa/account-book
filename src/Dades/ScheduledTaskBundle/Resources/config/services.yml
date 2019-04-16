@@ -1,4 +1,5 @@
 parameters:
+    fileLog: dades_scheduled_task_bundle.log
 
 services:
     _defaults:
@@ -17,3 +18,8 @@ services:
 
     Dades\ScheduledTaskBundle\Command\RunCronCommand:
         $projectdir: '%kernel.project_dir%'
+        $fileLog: '%fileLog%'
+
+    Dades\ScheduledTaskBundle\Service\Logger:
+        $projectdir: '%kernel.project_dir%'
+        $fileLog: '%fileLog%'

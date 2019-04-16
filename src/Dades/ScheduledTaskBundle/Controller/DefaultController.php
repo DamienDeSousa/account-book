@@ -16,23 +16,16 @@ class DefaultController extends Controller
      */
     public function indexAction(ScheduledTaskService $scheduledTaskService)
     {
-        /*$scheduledTask = $scheduledTaskService->create();
-        $scheduledTask->setName("nom")
-          ->setCommand("notepad.exe")
-        ->setStartTime("16:13:00");
-        $scheduledTaskService->everySpecificDateOfMonth($scheduledTask, "31");
+        $task1 = $scheduledTaskService->create();
+        $task1->setCommand("notepad.exe")->setCronExpresion("*/5 * * * *");
 
-        $scheduledTaskService->save($scheduledTask);*/
+        $task2 = $scheduledTaskService->create();
+        $task2->setCommand("calc")->setCronExpresion("30 * * * *");
 
-        /*$scheduledTask = $scheduledTaskService->getByName("nom");
-        $scheduledTask->setFrequency(2);
-        $scheduledTaskService->update($scheduledTask);*/
-
-        $scheduledTask = $scheduledTaskService->getByName("nom");
-        $scheduledTaskService->deleteByName("nom");
-
-        die();
-        return new Response($scheduledTask);
+        $scheduledTaskService->save($task1);
+        $scheduledTaskService->save($task2);
+        
+        return new Response("it works");
     }
 }
 //https://sites.google.com/site/ballif1073/windows/taches-planifiees
