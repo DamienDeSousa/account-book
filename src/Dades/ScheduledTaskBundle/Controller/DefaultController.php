@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Dades\ScheduledTaskBundle\Service\ScheduledTaskService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Dades\ScheduledTaskBundle\Exception\BadCommandException;
+use Cron\CronExpression;
 
 class DefaultController extends Controller
 {
@@ -16,16 +17,32 @@ class DefaultController extends Controller
      */
     public function indexAction(ScheduledTaskService $scheduledTaskService)
     {
-        $task1 = $scheduledTaskService->create();
-        $task1->setCommand("notepad.exe")->setCronExpresion("*/5 * * * *");
+        //$task1 = $scheduledTaskService->create();
+        //$task1->setCommand("notepad.exe")->setCronExpresion("*/5 * * * *");
 
-        $task2 = $scheduledTaskService->create();
-        $task2->setCommand("calc")->setCronExpresion("30 * * * *");
+        //$task2 = $scheduledTaskService->create();
+        //$task2->setCommand("calc")->setCronExpresion("30 * * * *");
 
-        $scheduledTaskService->save($task1);
-        $scheduledTaskService->save($task2);
-        
-        return new Response("it works");
+        //$task3 = $scheduledTaskService->create();
+        //$task3->setCommand("phpp")->setCronExpresion("0 * * * *");
+
+        //$scheduledTaskService->save($task1);
+        //$scheduledTaskService->save($task2);
+        //$scheduledTaskService->save($task3);
+
+        /*$task3 = $scheduledTaskService->getScheduledTask(1);
+        $scheduledTaskService->delete($task3);*/
+
+        //$task4 = $scheduledTaskService->create();
+        //$task4->setCommand("php --vers")->setCronExpresion("*/5 * * * *");
+
+        //$scheduledTaskService->save($task4);
+
+        $task = $scheduledTaskService->getScheduledTask(4);
+        $cron = CronExpression::factory($task->getCronExpresion());
+        echo $cron->getNextRunDate()->format('Y-m-d H:i:s');
+
+        return new Response($cron->getNextRunDate()->format('Y-m-d H:i:s'));
     }
 }
 //https://sites.google.com/site/ballif1073/windows/taches-planifiees

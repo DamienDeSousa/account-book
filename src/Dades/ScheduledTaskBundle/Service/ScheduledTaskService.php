@@ -7,6 +7,7 @@ use Dades\ScheduledTaskBundle\Exception\BadCommandException;
 use Doctrine\ORM\EntityManagerInterface;
 use Dades\ScheduledTaskBundle\Exception\OSNotFoundException;
 use Dades\ScheduledTaskBundle\Exception\NoSuchEntityException;
+use Cron\CronExpression;
 
 /**
  * Service to use for manage the scheduled tasks.
@@ -100,5 +101,17 @@ class ScheduledTaskService
     {
         $this->entityManager->remove($scheduledTask);
         $this->entityManager->flush();
+    }
+
+    /**
+     * Test if a command should be run now
+     * @param  ScheduledTask $scheduledTask [description]
+     * @return bool                         [description]
+     */
+    public function isDue(ScheduledTask $scheduledTask): bool
+    {
+        $cron = CronExpression::factory($scheduledTask->getCronExpresion());
+
+        return $cron->isDue();
     }
 }
